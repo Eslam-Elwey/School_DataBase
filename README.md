@@ -8,4 +8,4 @@ Create A school Data Base Which Provides Options :
 6. Call Student/Father/Mother
 7. Sorting School Data
 
-##  Save school Data in File.txt 
+Save school Data in File.txt 
