@@ -579,89 +579,104 @@ static void print_student_data (void)
 /* Add Student To School */
 static void school_add_student (void)
 {
-	u16 i ;
-	u8 L_var ;
-	cmdSetConsoleColour(TEXT_Cyan);
-	cmdGoToXY(20,3);
-	printf("Enter Student Name : ");
-	fflush(stdin);
-	string_scan(school[current_std].name,MAX_NAME_LENGTH);
-	
-	
-	cmdGoToXY(20,6);
-	printf("Enter Student Age : ");
-	fflush(stdin);
-	scanf("%d",&school[current_std].age);
-	
-	cmdGoToXY(20,8);
-	printf("Enter Student Phone Number : ");
-	fflush(stdin);
-	Phone_scan(school[current_std].phone,MAX_PHONE_NUMBER);
-
-	cmdGoToXY(20,10);
-	printf("Enter Student Degree : ");
-	fflush(stdin);
-	scanf("%c",&school[current_std].degree);
-	
-	cmdGoToXY(20,12);
-	printf("Enter Father's name : ");
-	fflush(stdin);
-	string_scan(school[current_std].father.name,MAX_NAME_LENGTH);
-	
-	cmdGoToXY(20,14);
-	printf("Enter Father's age : ");
-	fflush(stdin);
-	scanf("%d",&school[current_std].father.age);
-	cmdGoToXY(20,16);
-	printf("Enter Father's phone number : ");
-	fflush(stdin);
-	Phone_scan(school[current_std].father.phone,MAX_PHONE_NUMBER);
-	
-	cmdGoToXY(20,18);
-	fflush(stdin);
-	printf("Enter Mother's name : ");
-	fflush(stdin);
-	string_scan(school[current_std].mother.name,MAX_NAME_LENGTH);
-	
-	cmdGoToXY(20,20);
-	printf("Enter Mother's age : ");
-	fflush(stdin);
-	scanf("%d",&school[current_std].mother.age);
-	cmdGoToXY(20,22);
-	printf("Enter Mother's phone number : ");
-	fflush(stdin);
-	Phone_scan(school[current_std].mother.phone,MAX_PHONE_NUMBER);
-
-	cmdGoToXY(20,24);
-	printf("Enter Number of brothers : ");
-	fflush(stdin);
-	scanf("%d",&school[current_std].Brothers_no);
-	Total_bro = school[current_std].Brothers_no ;
-	
-	school[current_std].Brother_ptr = malloc(Total_bro * sizeof(person_t));
-											
-	for (i=0;i<Total_bro;i++)
+	if (current_std<SCHOOL_MAX_SIZE)
 	{
-		cmdGoToXY(20,26+y_axis);
-		printf("Enter name of brother[%d]: ",i+1);
+		u16 i ;
+		u8 L_var ;
+		cmdSetConsoleColour(TEXT_Cyan);
+		cmdGoToXY(20,3);
+		printf("Enter Student Name : ");
 		fflush(stdin);
-		string_scan(school[current_std].Brother_ptr[i].name,MAX_NAME_LENGTH);
+		string_scan(school[current_std].name,MAX_NAME_LENGTH);
 		
-		y_axis+=2 ;
 		
-		cmdGoToXY(20,26+y_axis);
-		printf("Enter Age of brother[%d]: ",i+1);
+		cmdGoToXY(20,6);
+		printf("Enter Student Age : ");
 		fflush(stdin);
-		scanf("%d",&school[current_std].Brother_ptr[i].age);
+		scanf("%d",&school[current_std].age);
 		
-		y_axis+=3 ;
+		cmdGoToXY(20,8);
+		printf("Enter Student Phone Number : ");
+		fflush(stdin);
+		Phone_scan(school[current_std].phone,MAX_PHONE_NUMBER);
+
+		cmdGoToXY(20,10);
+		printf("Enter Student Degree : ");
+		fflush(stdin);
+		scanf("%c",&school[current_std].degree);
+		
+		cmdGoToXY(20,12);
+		printf("Enter Father's name : ");
+		fflush(stdin);
+		string_scan(school[current_std].father.name,MAX_NAME_LENGTH);
+		
+		cmdGoToXY(20,14);
+		printf("Enter Father's age : ");
+		fflush(stdin);
+		scanf("%d",&school[current_std].father.age);
+		cmdGoToXY(20,16);
+		printf("Enter Father's phone number : ");
+		fflush(stdin);
+		Phone_scan(school[current_std].father.phone,MAX_PHONE_NUMBER);
+		
+		cmdGoToXY(20,18);
+		fflush(stdin);
+		printf("Enter Mother's name : ");
+		fflush(stdin);
+		string_scan(school[current_std].mother.name,MAX_NAME_LENGTH);
+		
+		cmdGoToXY(20,20);
+		printf("Enter Mother's age : ");
+		fflush(stdin);
+		scanf("%d",&school[current_std].mother.age);
+		cmdGoToXY(20,22);
+		printf("Enter Mother's phone number : ");
+		fflush(stdin);
+		Phone_scan(school[current_std].mother.phone,MAX_PHONE_NUMBER);
+
+		cmdGoToXY(20,24);
+		printf("Enter Number of brothers : ");
+		fflush(stdin);
+		scanf("%d",&school[current_std].Brothers_no);
+		Total_bro = school[current_std].Brothers_no ;
+		
+		school[current_std].Brother_ptr = malloc(Total_bro * sizeof(person_t));
+												
+		for (i=0;i<Total_bro;i++)
+		{
+			cmdGoToXY(20,26+y_axis);
+			printf("Enter name of brother[%d]: ",i+1);
+			fflush(stdin);
+			string_scan(school[current_std].Brother_ptr[i].name,MAX_NAME_LENGTH);
+			
+			y_axis+=2 ;
+			
+			cmdGoToXY(20,26+y_axis);
+			printf("Enter Age of brother[%d]: ",i+1);
+			fflush(stdin);
+			scanf("%d",&school[current_std].Brother_ptr[i].age);
+			
+			y_axis+=3 ;
+		}
+		cmdGoToXY(20,26+y_axis);
+		printf("*************************");
+		cmdDelay(5000);
+		current_std++ ;
+		School_store_database();
+		y_axis = 0 ;
 	}
-	cmdGoToXY(20,26+y_axis);
-	printf("*************************");
-	cmdDelay(5000);
-	current_std++ ;
-	School_store_database();
-	y_axis = 0 ;
+	else 
+	{
+		cmdClearScreen();
+		cmdGoToXY(20,8);
+		printf("Can't Take Another Student as Maximum Limit Has Been reached");
+		cmdGoToXY(20,12);
+		printf("***************************************************");
+		cmdDelay(8000);
+		cmdClearScreen();
+		return ; 
+	}
+	
 }
 /*************************************************************************/
 
